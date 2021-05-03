@@ -60,9 +60,9 @@ public class Jogos_controller extends HttpServlet{
 				+ "	            Jogos\r\n"
 				+ "	          </a>\r\n"
 				+ "	          <ul class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n"
-				+ "	            <li><a class=\"dropdown-item\" href=\"forms/Cadastro_Jogos.html\">Cadastrar</a></li>\r\n"
+				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/forms/Cadastro_Jogos.html\">Cadastrar</a></li>\r\n"
 				+ "	            <li><a class=\"dropdown-item\" href=\"#\">Alterar</a></li>\r\n"
-				+ "	            <li><a class=\"dropdown-item\" href=\"#\">Deletar</a></li>\r\n"
+				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/forms/Remover_Jogos.html\">Deletar</a></li>\r\n"
 				+ "	            <li><a class=\"dropdown-item active\" href=\"/trabalho_1/jogos\">Listar</a></li>	            \r\n"
 				+ "	          </ul>\r\n"
 				+ "	        </li>	        \r\n"
@@ -71,10 +71,10 @@ public class Jogos_controller extends HttpServlet{
 				+ "	            Clientes\r\n"
 				+ "	          </a>\r\n"
 				+ "	          <ul class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n"
-				+ "	            <li><a class=\"dropdown-item\" href=\"#\">Cadastrar</a></li>\r\n"
+				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/forms/Cadastro_Clientes.html\">Cadastrar</a></li>\r\n"
 				+ "	            <li><a class=\"dropdown-item\" href=\"#\">Alterar</a></li>\r\n"
 				+ "	            <li><a class=\"dropdown-item\" href=\"#\">Deletar</a></li>\r\n"
-				+ "	            <li><a class=\"dropdown-item\" href=\"#\">Listar</a></li>\r\n"
+				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/clientes\">Listar</a></li>\r\n"
 				+ "	          </ul>\r\n"
 				+ "	        </li>	        \r\n"
 				+ "	      </ul>	      \r\n"
@@ -97,9 +97,9 @@ public class Jogos_controller extends HttpServlet{
 				+ "    <tr>\r\n"
 				+ "      <th scope=\"col\">#</th>\r\n"
 				+ "      <th scope=\"col\">Nome</th>\r\n"
-				+ "      <th scope=\"col\">Gênero</th>\r\n"
-				+ "      <th scope=\"col\">Descrição</th>\r\n"
-				+ "      <th scope=\"col\">Preço</th>\r\n"
+				+ "      <th scope=\"col\">Gï¿½nero</th>\r\n"
+				+ "      <th scope=\"col\">Descriï¿½ï¿½o</th>\r\n"
+				+ "      <th scope=\"col\">Preï¿½o</th>\r\n"
 				+ "    </tr>\r\n"
 				+ "  </thead>");
 		out.println("<tbody>");
@@ -130,6 +130,11 @@ public class Jogos_controller extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if ("delete".equals(req.getParameter("action"))) {						
+			doDelete(req, resp);
+			return;
+		}
+		
 		PrintWriter out = resp.getWriter();		
 		List<Jogo> jogos = retriveJogos(req);				
 		
@@ -149,21 +154,24 @@ public class Jogos_controller extends HttpServlet{
 				
 	}
 	
-	@WebServlet("/jogos/delete")
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		PrintWriter out = resp.getWriter();
 		List<Jogo> jogos = retriveJogos(req);
+		Jogo aux = null;
+		
 		
 		for (Jogo jogo : jogos) {
 			if (jogo.getNome().equals(req.getParameter("nome"))) {
-				jogos.remove(jogo);
+				aux = jogo;
 			}else {
 				out.println("<script type=\"text/javascript\">");
-			    out.println("alert('Dado não encontrado!');");
+			    out.println("alert('Dado nï¿½o encontrado!');");
 			    out.println("</script>");
 			}
 		}
+		
+		jogos.remove(aux);
 		
 		HttpSession httpsession = req.getSession();
 		
