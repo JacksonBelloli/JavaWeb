@@ -107,7 +107,7 @@ public class Clientes_controller extends HttpServlet{
 			System.out.println(cliente.getNome());
 			
 			out.println("<tr>");
-			out.println("<td class=\"row\">1</td>");
+			out.println("<td>" + cliente.getId() + "</td>");
 			out.println("<td>" + cliente.getNome() + "</td>");
 			out.println("<td>" + cliente.getEmail() + "</td>");
 			out.println("<td>" + cliente.getData_nasc() + "</td>");
@@ -130,10 +130,18 @@ public class Clientes_controller extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if("delete".equals(req.getParameter("action"))) {
+			doDelete(req, resp);
+			return;
+		}else if ("put".equals(req.getParameter("action"))) {
+			doPut(req, resp);
+			return;
+		}
+		
 		PrintWriter out = resp.getWriter();		
 		List<Cliente> clientes = retriveClientes(req);				
 		
-		clientes.add(new Cliente(req.getParameter("nome"), req.getParameter("data_nasc"), req.getParameter("pais"), req.getParameter("estado"), req.getParameter("cidade"), req.getParameter("endereco"), req.getParameter("email")));
+		clientes.add(new Cliente(clientes.size(), req.getParameter("nome"), req.getParameter("data_nasc"), req.getParameter("pais"), req.getParameter("estado"), req.getParameter("cidade"), req.getParameter("endereco"), req.getParameter("email")));
 		
 		HttpSession httpsession = req.getSession();
 		
@@ -149,9 +157,38 @@ public class Clientes_controller extends HttpServlet{
 	}
 	
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doDelete(req, resp);
+		super.doPut(req, resp);
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PrintWriter out = resp.getWriter();
+		List<Cliente> clientes = retriveClientes(req);
+		Cliente aux = null;
+		
+		
+		for (Cliente cliente : clientes) {
+			if (cliente.getId() == Integer.parseInt(req.getParameter("id"))) {
+				aux = cliente;
+			}else {
+				out.println("<script type=\"text/javascript\">");
+			    out.println("alert('Dado n�o encontrado!');");
+			    out.println("</script>");
+			}
+		}
+		
+		
+		clientes.remove(aux);
+		
+		HttpSession httpsession = req.getSession();
+		
+		httpsession.setAttribute("clientes", clientes);
+		
+		RequestDispatcher request = req.getRequestDispatcher("forms/Remover_Clientes.html");
+		
+		request.forward(req, resp);
 	}
 	
 	private List<Cliente> retriveClientes (HttpServletRequest req){

@@ -109,7 +109,7 @@ public class Jogos_controller extends HttpServlet{
 			System.out.println(jogo.getNome());
 			
 			out.println("<tr>");
-			out.println("<td class=\"row\">1</td>");
+			out.println("<td>" + jogo.getId() + "</td>");
 			out.println("<td>" + jogo.getNome() + "</td>");
 			out.println("<td>" + jogo.getGenero() + "</td>");
 			out.println("<td>" + jogo.getDescricao() + "</td>");
@@ -133,12 +133,15 @@ public class Jogos_controller extends HttpServlet{
 		if ("delete".equals(req.getParameter("action"))) {						
 			doDelete(req, resp);
 			return;
+		}else if ("put".equals(req.getParameter("action"))) {
+			doPut(req, resp);
+			return;
 		}
 		
 		PrintWriter out = resp.getWriter();		
 		List<Jogo> jogos = retriveJogos(req);				
 		
-		jogos.add(new Jogo(req.getParameter("nome"), req.getParameter("genero"), req.getParameter("descricao"), req.getParameter("preco")));
+		jogos.add(new Jogo(jogos.size(), req.getParameter("nome"), req.getParameter("genero"), req.getParameter("descricao"), req.getParameter("preco")));
 		
 		HttpSession httpsession = req.getSession();
 		
@@ -155,6 +158,33 @@ public class Jogos_controller extends HttpServlet{
 	}
 	
 	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PrintWriter out = resp.getWriter();
+		List<Jogo> jogos = retriveJogos(req);
+		int aux = 0;
+		
+		for (Jogo jogo : jogos) {
+			if (jogo.getId() == Integer.parseInt(req.getParameter("id"))) {
+				aux = jogos.indexOf(jogo);
+			}else {
+				out.println("<script type=\"text/javascript\">");
+			    out.println("alert('Dado n�o encontrado!');");
+			    out.println("</script>");
+			}
+		}
+		jogos.remove(aux);
+		jogos.add(aux, new Jogo(Integer.parseInt(req.getParameter("id")), req.getParameter("nome"), req.getParameter("genero"), req.getParameter("descricao"), req.getParameter("preco")));
+		
+		HttpSession httpsession = req.getSession();
+		
+		httpsession.setAttribute("jogos", jogos);
+		
+		RequestDispatcher request = req.getRequestDispatcher("forms/Alterar_Jogos.html");
+		
+		request.forward(req, resp);
+	}
+	
+	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		PrintWriter out = resp.getWriter();
 		List<Jogo> jogos = retriveJogos(req);
@@ -162,7 +192,7 @@ public class Jogos_controller extends HttpServlet{
 		
 		
 		for (Jogo jogo : jogos) {
-			if (jogo.getNome().equals(req.getParameter("nome"))) {
+			if (jogo.getId() == Integer.parseInt(req.getParameter("id"))) {
 				aux = jogo;
 			}else {
 				out.println("<script type=\"text/javascript\">");
@@ -170,6 +200,7 @@ public class Jogos_controller extends HttpServlet{
 			    out.println("</script>");
 			}
 		}
+		
 		
 		jogos.remove(aux);
 		

@@ -1,6 +1,7 @@
 package models;
 
 public class Jogo {
+	private int id;
 	private String nome;
 	private String genero;
 	private String descricao;
@@ -11,14 +12,22 @@ public class Jogo {
 	public Jogo() {
 		
 	}
-	public Jogo(String nome, String genero, String descricao, String preco) {
+	public Jogo(int id, String nome, String genero, String descricao, String preco) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.genero = genero;
 		this.descricao = descricao;
 		this.preco = preco;
 	}
 	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}

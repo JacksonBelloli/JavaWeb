@@ -21,7 +21,7 @@
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <li><a class="dropdown-item " href="/trabalho_1/forms/Cadastro_Jogos.html">Cadastrar</a></li>
-	            <li><a class="dropdown-item" href="#">Alterar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Alterar_Jogos.html">Alterar</a></li>
 	            <li><a class="dropdown-item active" href="/trabalho_1/forms/Remover_Jogos.html">Deletar</a></li>
 	            <li><a class="dropdown-item" href="/trabalho_1/jogos">Listar</a></li>	            
 	          </ul>
@@ -48,8 +48,8 @@
  			<form method="POST" action="/trabalho_1/jogos">
  				<input type="hidden" name="action" value="delete">
  				<div class="mb-3">
-				  <label for="name" class="form-label">Nome</label>
-				  <input type="text" class="form-control" name="nome" placeholder="Insira o nome aqui">
+				  <label for="name" class="form-label">Id</label>
+				  <input type="text" class="form-control" name="id" placeholder="Insira o nome aqui">
 				</div>				
 				<div class="mb-3">
 					<button type="submit" class="btn btn-primary">Remover</button>

@@ -1,6 +1,7 @@
 package models;
 
 public class Cliente {
+	private int id;
 	private String nome;
 	private String data_nasc;
 	private String pais;
@@ -9,9 +10,10 @@ public class Cliente {
 	private String endereco;
 	private String email;
 	
-	public Cliente(String nome, String data_nasc, String pais, String estado, String cidade, String endereco,
+	public Cliente(int id, String nome, String data_nasc, String pais, String estado, String cidade, String endereco,
 			String email) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.data_nasc = data_nasc;
 		this.pais = pais;
@@ -19,6 +21,15 @@ public class Cliente {
 		this.cidade = cidade;
 		this.endereco = endereco;
 		this.email = email;
+	}
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
