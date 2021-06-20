@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,26 +10,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import dao.ClienteDAO;
-import models.Cliente;
-import models.Jogo;
+import dao.DesenvolvedoraDAO;
+import models.Desenvolvedora;
 
-@WebServlet("/clientes")
-public class Clientes_controller extends HttpServlet{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+@WebServlet("/desenvolvedoras")
+public class Desenvolvedora_controller extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
-		ClienteDAO clientedao = new ClienteDAO();
-		
-		List<Cliente> clientes = clientedao.list();		
+		DesenvolvedoraDAO desenvdao = new DesenvolvedoraDAO();
+				
+		List<Desenvolvedora> desenvs = desenvdao.list();		
 		
 		
 		//System.out.println(jogos.length);			
@@ -73,8 +64,8 @@ public class Clientes_controller extends HttpServlet{
 				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/forms/Remover_Clientes.html\">Deletar</a></li>\r\n"
 				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/clientes\">Listar</a></li>\r\n"
 				+ "	          </ul>\r\n"
-				+ "	        </li>	        \r\n"
-				+ "         <li class=\"nav-item dropdown\">\r\n"
+				+ "	        </li> \r\n"
+				+ "	        <li class=\"nav-item dropdown\">\r\n"
 				+ "	          <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">\r\n"
 				+ "	            Desenvolvedoras\r\n"
 				+ "	          </a>\r\n"
@@ -82,7 +73,7 @@ public class Clientes_controller extends HttpServlet{
 				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/forms/Cadastro_Desenvolvedoras.html\">Cadastrar</a></li>\r\n"
 				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/forms/Alterar_Desenvolvedoras.html\">Alterar</a></li>\r\n"
 				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/forms/Remover_Desenvolvedoras.html\">Deletar</a></li>\r\n"
-				+ "	            <li><a class=\"dropdown-item\" href=\"/trabalho_1/desenvolvedoras\">Listar</a></li>\r\n"
+				+ "	            <li><a class=\"dropdown-item active\" href=\"/trabalho_1/desenvolvedoras\">Listar</a></li>\r\n"
 				+ "	          </ul>\r\n"
 				+ "	        </li>	\r\n"
 				+ "	      </ul>	      \r\n"
@@ -94,9 +85,9 @@ public class Clientes_controller extends HttpServlet{
 		out.println("<main>");
 		out.println("<div class=\"container\" style=\"margin-top: 15px;\">");
 		out.println("<div class=\"row\">");
-		if(clientes.isEmpty()){
+		if(desenvs.isEmpty()){
 			   out.println("<script type=\"text/javascript\">");
-			   out.println("alert('Nenhum dado encontrado!');");
+			   out.println("alert('Nenhum dado cadastrado!');");
 			   out.println("</script>");
 			   out.println("<h2 style=\"text-align: center;\">Nenhum dado encontrado!</h2>");
 		}
@@ -105,26 +96,16 @@ public class Clientes_controller extends HttpServlet{
 				+ "    <tr>\r\n"
 				+ "      <th scope=\"col\">#</th>\r\n"
 				+ "      <th scope=\"col\">Nome</th>\r\n"
-				+ "      <th scope=\"col\">E-mail</th>\r\n"
-				+ "      <th scope=\"col\">Data de Nascimento</th>\r\n"
-				+ "      <th scope=\"col\">País</th>\r\n"
-				+ "      <th scope=\"col\">Estado</th>\r\n"
-				+ "      <th scope=\"col\">Cidade</th>\r\n"
-				+ "      <th scope=\"col\">Endereço</th>\r\n"
+				+ "      <th scope=\"col\">Descrição</th>\r\n"
 				+ "    </tr>\r\n"
 				+ "  </thead>");
 		out.println("<tbody>");
 		
-		for (Cliente cliente : clientes) {			
+		for (Desenvolvedora desenv : desenvs) {			
 			out.println("<tr>");
-			out.println("<td>" + cliente.getId() + "</td>");
-			out.println("<td>" + cliente.getNome() + "</td>");
-			out.println("<td>" + cliente.getEmail() + "</td>");
-			out.println("<td>" + cliente.getData_nasc() + "</td>");
-			out.println("<td>" + cliente.getPais() + "</td>");
-			out.println("<td>" + cliente.getEstado() + "</td>");
-			out.println("<td>" + cliente.getCidade() + "</td>");
-			out.println("<td>" + cliente.getEndereco() + "</td>");						
+			out.println("<td>" + desenv.getId() + "</td>");
+			out.println("<td>" + desenv.getNome() + "</td>");			
+			out.println("<td>" + desenv.getDescricao() + "</td>");			
 			out.println("</tr>");
 		}				
 		
@@ -136,11 +117,12 @@ public class Clientes_controller extends HttpServlet{
 		out.println("<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf\" crossorigin=\"anonymous\"></script>");
 		out.println("</body>");
 		out.println("</html>");
+				
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if("delete".equals(req.getParameter("action"))) {
+		if ("delete".equals(req.getParameter("action"))) {						
 			doDelete(req, resp);
 			return;
 		}else if ("put".equals(req.getParameter("action"))) {
@@ -148,68 +130,78 @@ public class Clientes_controller extends HttpServlet{
 			return;
 		}
 		
-		if(req.getParameter("nome").isBlank() || req.getParameter("data_nasc").isBlank() || req.getParameter("pais").isBlank() || req.getParameter("estado").isBlank() || req.getParameter("cidade").isBlank() || req.getParameter("endereco").isBlank() || req.getParameter("email").isBlank()) {
-			RequestDispatcher request = req.getRequestDispatcher("forms/Cadastro_Clientes.html");
+		if (req.getParameter("nome").isBlank() || req.getParameter("descricao").isBlank()) {
+			RequestDispatcher request = req.getRequestDispatcher("forms/Cadastro_Desenvolvedoras.html");
 			
 			request.forward(req, resp);
 			return;
 		}
 		
-		PrintWriter out = resp.getWriter();		
-		ClienteDAO clientedao = new ClienteDAO();				
+		PrintWriter out = resp.getWriter();						
 		
-		Cliente cliente = new Cliente(0, req.getParameter("nome"), req.getParameter("data_nasc"), req.getParameter("pais"), req.getParameter("estado"), req.getParameter("cidade"), req.getParameter("endereco"), req.getParameter("email"));
+		Desenvolvedora desenv = new Desenvolvedora(0, req.getParameter("nome"), req.getParameter("descricao"));
 		
-		clientedao.insert(cliente);
+		
+		DesenvolvedoraDAO desenvdao = new DesenvolvedoraDAO();
+		
+		desenvdao.insert(desenv);
 		
 		out.println("<script type=\"text/javascript\">");
 	    out.println("alert('Dados salvos com sucesso!');");
 	    out.println("</script>");				
 		
-		RequestDispatcher request = req.getRequestDispatcher("forms/Cadastro_Clientes.html");
+		RequestDispatcher request = req.getRequestDispatcher("forms/Cadastro_Desenvolvedoras.html");
 		
 		request.forward(req, resp);
+				
 	}
 	
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
-		ClienteDAO clientedao = new ClienteDAO();
-		int aux = 0;
+		DesenvolvedoraDAO desenvdao = new DesenvolvedoraDAO();
 		
-		if(req.getParameter("id").isBlank() || req.getParameter("nome").isBlank() || req.getParameter("data_nasc").isBlank() || req.getParameter("pais").isBlank() || req.getParameter("estado").isBlank() || req.getParameter("cidade").isBlank() || req.getParameter("endereco").isBlank() || req.getParameter("email").isBlank()) {
-			RequestDispatcher request = req.getRequestDispatcher("forms/Alterar_Clientes.html");
+		if (req.getParameter("id").isBlank() || req.getParameter("nome").isBlank() || req.getParameter("descricao").isBlank()) {
+			RequestDispatcher request = req.getRequestDispatcher("forms/Alterar_Desenvolvedoras.html");
 			
 			request.forward(req, resp);
 			return;
 		}
 		
-		Cliente cliente = new Cliente(Integer.parseInt(req.getParameter("id")), req.getParameter("nome"), req.getParameter("data_nasc"), req.getParameter("pais"), req.getParameter("estado"), req.getParameter("cidade"), req.getParameter("endereco"), req.getParameter("email"));
+		Desenvolvedora desenv = new Desenvolvedora(Integer.parseInt(req.getParameter("id")), req.getParameter("nome"), req.getParameter("descricao"));
 		
-		clientedao.update(cliente);
+		desenvdao.update(desenv);
 		
-		RequestDispatcher request = req.getRequestDispatcher("forms/Alterar_Clientes.html");
+		RequestDispatcher request = req.getRequestDispatcher("forms/Alterar_Desenvolvedoras.html");
 		
 		request.forward(req, resp);
 	}
 	
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		PrintWriter out = resp.getWriter();
-		ClienteDAO clientedao = new ClienteDAO();		
+		DesenvolvedoraDAO desenvdao = new DesenvolvedoraDAO();
 		
-		if (req.getParameter("id").isBlank()) {
-			RequestDispatcher request = req.getRequestDispatcher("forms/Remover_Clientes.html");
+		
+		if(req.getParameter("id").isBlank()) {
+			out.println("<script type=\"text/javascript\">");
+		    out.println("alert('Um ou mais campos não foram preenchidos');");
+		    out.println("</script>");
+		    
+		    RequestDispatcher request = req.getRequestDispatcher("forms/Remover_Desenvolvedoras.html");
 			
 			request.forward(req, resp);
+			
 			return;
-		}			
+		    
+		}
 		
-		clientedao.delete(Integer.parseInt(req.getParameter("id")));					
+		desenvdao.delete(Integer.parseInt(req.getParameter("id")));
 		
-		RequestDispatcher request = req.getRequestDispatcher("forms/Remover_Clientes.html");
+		
+		RequestDispatcher request = req.getRequestDispatcher("forms/Remover_Desenvolvedoras.html");
 		
 		request.forward(req, resp);
-	}		
-
+		
+	}
 }

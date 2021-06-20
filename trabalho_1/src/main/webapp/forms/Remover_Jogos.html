@@ -32,11 +32,22 @@
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <li><a class="dropdown-item" href="/trabalho_1/forms/Cadastro_Clientes.html">Cadastrar</a></li>
-	            <li><a class="dropdown-item" href="#">Alterar</a></li>
-	            <li><a class="dropdown-item" href="#">Deletar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Alterar_Clientes.html">Alterar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Remover_Clientes.html">Deletar</a></li>
 	            <li><a class="dropdown-item" href="/trabalho_1/clientes">Listar</a></li>
 	          </ul>
-	        </li>	        
+	        </li>
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            Desenvolvedoras
+	          </a>
+	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Cadastro_Desenvolvedoras.html">Cadastrar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Alterar_Desenvolvedoras.html">Alterar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Remover_Desenvolvedoras.html">Deletar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/desenvolvedoras">Listar</a></li>
+	          </ul>
+	        </li>		        
 	      </ul>	      
 	    </div>
 	  </div>
@@ -49,7 +60,7 @@
  				<input type="hidden" name="action" value="delete">
  				<div class="mb-3">
 				  <label for="name" class="form-label">Id</label>
-				  <input type="text" class="form-control" name="id" placeholder="Insira o nome aqui">
+				  <input type="text" class="form-control" name="id" placeholder="Insira o id aqui" required>
 				</div>				
 				<div class="mb-3">
 					<button type="submit" class="btn btn-primary">Remover</button>

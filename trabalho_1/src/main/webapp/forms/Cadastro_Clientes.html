@@ -20,7 +20,7 @@
 	            Jogos
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <li><a class="dropdown-item active" href="/trabalho_1/forms/Cadastro_Jogos.html">Cadastrar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Cadastro_Jogos.html">Cadastrar</a></li>
 	            <li><a class="dropdown-item" href="/trabalho_1/forms/Alterar_Jogos.html">Alterar</a></li>
 	            <li><a class="dropdown-item" href="/trabalho_1/forms/Remover_Jogos.html">Deletar</a></li>
 	            <li><a class="dropdown-item" href="/trabalho_1/jogos">Listar</a></li>	            
@@ -32,11 +32,22 @@
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <li><a class="dropdown-item active" href="/trabalho_1/forms/Cadastro_Clientes.html">Cadastrar</a></li>
-	            <li><a class="dropdown-item" href="#">Alterar</a></li>
-	            <li><a class="dropdown-item" href="#">Deletar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Alterar_Clientes.html">Alterar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Remover_Clientes.html">Deletar</a></li>
 	            <li><a class="dropdown-item" href="/trabalho_1/clientes">Listar</a></li>
 	          </ul>
-	        </li>	        
+	        </li>
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            Desenvolvedoras
+	          </a>
+	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Cadastro_Desenvolvedoras.html">Cadastrar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Alterar_Desenvolvedoras.html">Alterar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/forms/Remover_Desenvolvedoras.html">Deletar</a></li>
+	            <li><a class="dropdown-item" href="/trabalho_1/desenvolvedoras">Listar</a></li>
+	          </ul>
+	        </li>		        
 	      </ul>	      
 	    </div>
 	  </div>
@@ -48,31 +59,31 @@
  			<form method="POST" action="/trabalho_1/clientes">
  				<div class="mb-3">
 				  <label for="name" class="form-label">Nome</label>
-				  <input type="text" class="form-control" name="nome" placeholder="Insira o nome aqui">
+				  <input type="text" class="form-control" name="nome" placeholder="Insira o nome aqui" required>
 				</div>
 				<div class="mb-3">
 				  <label for="genero" class="form-label">E-mail</label>
-				  <input type="email" class="form-control" name="email" placeholder="Insira o seu e-mail aqui">
+				  <input type="email" class="form-control" name="email" placeholder="Insira o seu e-mail aqui" required>
 				</div>
 				<div class="mb-3">
 				  <label for="genero" class="form-label">Data de Nascimento</label>
-				  <input type="date" class="form-control" name="data_nasc" placeholder="Insira a sua data de nascimento aqui">
+				  <input type="date" class="form-control" name="data_nasc" placeholder="Insira a sua data de nascimento aqui" required>
 				</div>
 				<div class="mb-3">
 				  <label for="descricao" class="form-label">País</label>
-				  <input type="text" class="form-control" name="pais" placeholder="Insira o país aqui">
+				  <input type="text" class="form-control" name="pais" placeholder="Insira o país aqui" required>
 				</div>
 				<div class="mb-3">
 				  <label for="preco" class="form-label">Estado</label>
-				  <input type="text" class="form-control" name="estado" placeholder="Insira o estado aqui">
+				  <input type="text" class="form-control" name="estado" placeholder="Insira o estado aqui" required>
 				</div>
 				<div class="mb-3">
 				  <label for="preco" class="form-label">Cidade</label>
-				  <input type="text" class="form-control" name="cidade" placeholder="Insira o cidade aqui">
+				  <input type="text" class="form-control" name="cidade" placeholder="Insira o cidade aqui" required>
 				</div>
 				<div class="mb-3">
 				  <label for="preco" class="form-label">Endereco</label>
-				  <input type="text" class="form-control" name="endereco" placeholder="Insira o endereço aqui">
+				  <input type="text" class="form-control" name="endereco" placeholder="Insira o endereço aqui" required>
 				</div>
 				<div class="mb-3">
 					<button type="submit" class="btn btn-primary">Salvar</button>
